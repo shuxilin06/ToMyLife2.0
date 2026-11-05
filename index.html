@@ -1,0 +1,57 @@
+    <!-- 引入css文件 -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aurora · 极光之下</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- 初始欢迎界面 -->
+    <main id="welcome-screen" class="screen active">
+        <div class="welcome-content">
+            <p class="eyebrow">A QUIET JOURNEY</p >
+            <h1>欢迎来到</h1>
+            <h2>Aurora <span>·</span> 极光之下</h2>
+            <p class="subtitle">
+                Somewhere beneath the same sky.
+            </p >
+            <button id="enter-button" class="enter-button">开始游戏</button>
+        </div>
+    </main>
+
+    <!-- 游戏界面 -->
+    <section id="game-screen" class="screen">
+        <!-- 小屋背景 -->
+        <div class="cabin-scene" id="cabin-scene">
+        <div class="cabin-layer cabin-sky"></div>
+        <div class="cabin-layer cabin-ocean"></div>
+        <div class="cabin-layer cabin-house"></div>
+        <div class="cabin-foreground"></div>
+        <button class="cabin-advance">前进</button>
+</div>
+        
+        <div class="shore-choices" id="shore-choices">
+            <button id="walk-option" class="choice-button">
+                <span class="choice-letter">A.</span> 看到极光了吗！我们在海边走走吧。
+            </button>
+            <button id="home-option" class="choice-button">
+                <span class="choice-letter">B.</span> 天色已经暗了，我们回家吧。
+            </button>
+        </div>
+
+        <div class="home-direction" id="home-direction">
+            <span class="direction-arrow">→</span>
+            <button id="go-home-button">回家吧</button>
+        </div>
+
+        <div class="walk-message" id="walk-message"></div>
+    </section>
+
+    <!-- 引入js -->
+    <script src="script.js"></script>
+
+</body>
+</html>

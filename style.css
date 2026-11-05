@@ -1,0 +1,737 @@
+/* 全局重置 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Georgia", "Microsoft YaHei", serif;
+    background: #071526;
+    color: #E8F0F6;
+    overflow: hidden;
+}
+
+/* 全屏控制 */
+.screen {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 1.2s ease, visibility 1.2s ease;
+}
+
+.screen.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* 欢迎界面 */
+#welcome-screen {
+    background:
+        linear-gradient(
+            rgba(4, 13, 29, 0.35),
+            rgba(4, 13, 29, 0.65)
+        ),
+        url("./assets/backgrounds/aurora-main.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+.welcome-content {
+    text-align: center;
+    padding: 24px;
+    animation: appear 1.5s ease both;
+}
+
+.eyebrow {
+    color: #83CFC7;
+    font-size: 11px;
+    letter-spacing: 5px;
+    margin-bottom: 28px;
+}
+
+.welcome-content h1 {
+    font-size: clamp(20px, 3vw, 28px);
+    font-weight: 300;
+    letter-spacing: 5px;
+    margin-bottom: 12px;
+}
+
+.welcome-content h2 {
+    font-size: clamp(30px, 5vw, 54px);
+    font-weight: 400;
+    letter-spacing: 2px;
+}
+
+.welcome-content h2 span {
+    color: #70CFC3;
+}
+
+.subtitle {
+    color: #B5C9D8;
+    font-size: 13px;
+    letter-spacing: 2px;
+    margin-top: 20px;
+}
+
+
+.enter-button {
+    margin-top: 55px;
+    padding: 14px 42px;
+    color: #E8F5F3;
+    background: rgba(13, 40, 56, 0.35);
+    border: 1px solid rgba(117, 205, 194, 0.7);
+    border-radius: 40px;
+    font-size: 15px;
+    letter-spacing: 3px;
+    cursor: pointer;
+    transition: all 0.35s ease;
+}
+
+.enter-button span {
+    margin-left: 12px;
+}
+
+.enter-button:hover {
+    background: rgba(82, 214, 197, 0.2);
+    box-shadow: 0 0 25px rgba(82, 214, 197, 0.25);
+    transform: translateY(-3px);
+}
+
+
+/* 游戏背景图 */
+#game-screen {
+    position: relative;
+    overflow: hidden;
+    background: #071526;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+#game-screen::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(4, 13, 29, 0.08) 0%,
+            rgba(4, 13, 29, 0.05) 38%,
+            rgba(4, 13, 29, 0.2) 55%,
+            rgba(4, 13, 29, 0.65) 100%
+        ),
+        url("./assets/backgrounds/aurora-main.jpg")
+        center center / cover no-repeat;
+
+    transform: translateY(25%);
+    animation: aurora-rise 3s ease-out forwards;
+
+    z-index: 1;
+    pointer-events: none;
+}
+
+#game-screen::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background:
+        url("./assets/backgrounds/ocean.jpg")
+        center bottom / 100% 40% no-repeat;
+
+    opacity: 0;
+    animation: ocean-fade 5s ease-out forwards;
+
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* 开屏动画 */
+@keyframes aurora-rise {
+    from {
+        transform: translateY(100%);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+@keyframes ocean-fade {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+
+/* 字幕组 */
+.game-content {
+    text-align: center;
+    padding: 30px 20px 12vh;
+    animation: appear 1.5s ease both;
+    position: relative;
+    z-index: 3;
+}
+
+.game-content h1 {
+    font-size: clamp(36px, 5vw, 58px);
+    font-weight: 400;
+    letter-spacing: 5px;
+}
+
+.game-description {
+    margin-top: 25px;
+    font-size: 15px;
+    letter-spacing: 2px;
+    color: #D3E1E9;
+}
+
+.game-hint {
+    margin-top: 14px;
+    font-size: 12px;
+    color: #A8BDCE;
+    letter-spacing: 2px;
+}
+
+/* 文字动画 */
+@keyframes appear {
+
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+/* 手机适配 */
+@media (max-width: 600px) {
+    .welcome-content h2 {
+        line-height: 1.5;
+    }
+
+    .eyebrow {
+        letter-spacing: 3px;
+    }
+
+    .game-description {
+        line-height: 1.8;
+    }
+
+    #game-screen {
+        background-size:
+            100% 40%,
+            cover;
+    }
+
+}
+
+/* 海边场景的选项 */
+
+  .shore-choices {
+    position: fixed;
+    z-index: 3;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+
+    width: min(85%, 760px);
+    padding: 20px;
+
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* 动画结束后显示选项 */
+.shore-choices.show {
+    visibility: visible;
+    animation: choices-appear 1s ease forwards;
+}
+
+@keyframes choices-appear {
+    from {
+        opacity: 0;
+        transform: translate(-50%, calc(-50% + 15px)); 
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%); 
+    }
+}
+
+/* A、B 选项按钮 */
+.choice-button {
+    width: 100%;
+    min-height: 85px;
+    padding: 22px 30px;
+
+    color: rgba(235, 243, 250, 0.95);
+
+    /* 深蓝色半透明背景 */
+    background: rgba(5, 18, 34, 0.58);
+
+    border: 1px solid rgba(190, 215, 235, 0.35);
+    border-radius: 16px;
+
+    font-size: clamp(18px, 2vw, 23px);
+    letter-spacing: 2px;
+    line-height: 1.6;
+
+    cursor: pointer;
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    transition: all 0.35s ease;
+
+    text-align:center;
+}
+
+
+.choice-button:hover {
+    background: rgba(20, 43, 65, 0.78);
+    border-color: rgba(220, 238, 250, 0.7);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+}
+
+.choice-letter {
+    color: #c7d9ed;
+    margin-right: 8px;
+}
+
+/* B 选项：右侧回家指引*/
+
+.home-direction {
+    position: absolute;
+    z-index: 4;
+
+    right: 5%;
+    top: 50%;
+
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(15px) translateY(-50%);
+}
+
+.home-direction.show {
+    visibility: visible;
+    animation: home-appear 1s ease forwards;
+}
+
+@keyframes home-appear {
+    to {
+        opacity: 1;
+        transform: translateX(0) translateY(-50%);
+    }
+}
+
+.direction-arrow {
+    color: rgba(225, 239, 250, 0.9);
+    font-size: 30px;
+    animation: arrow-move 1.5s ease-in-out infinite;
+}
+
+@keyframes arrow-move {
+    0%, 100% {
+        transform: translateX(0);
+    }
+
+    50% {
+        transform: translateX(7px);
+    }
+}
+
+#go-home-button {
+    padding: 13px 22px;
+
+    color: #eaf0f5;
+    background: rgba(15, 36, 54, 0.75);
+
+    border: 1px solid rgba(210, 225, 240, 0.5);
+    border-radius: 30px;
+
+    font-size: 16px;
+    letter-spacing: 2px;
+
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+
+    transition: all 0.3s ease;
+}
+
+#go-home-button:hover {
+    background: rgba(67, 99, 122, 0.8);
+}
+
+/* A 选项：漫步提示*/
+
+.walk-message {
+    position: absolute;
+    z-index: 3;
+
+    bottom: 9%;
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: 90%;
+    text-align: center;
+
+    color: rgba(231, 241, 250, 0.9);
+    font-size: 17px;
+    letter-spacing: 2px;
+
+    opacity: 0;
+    visibility: hidden;
+}
+
+.walk-message.show {
+    visibility: visible;
+    animation: choices-appear 1.5s ease forwards;
+}
+
+
+/* 小屋场景 */
+.cabin-scene {
+    position: absolute;
+    inset: 0;
+
+    z-index: 5;
+
+    background-image:
+        linear-gradient(
+            to bottom,
+            rgba(4, 13, 29, 0.05),
+            rgba(4, 13, 29, 0.12) 55%,
+            rgba(4, 13, 29, 0.35)
+        ),
+        url("./assets/backgrounds/cabin.jpg");
+
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transform: scale(1);
+    pointer-events: none;
+
+}
+
+/* 小屋场景渐显 */
+.cabin-scene.show {
+    visibility: visible;
+    opacity: 1;
+    animation: cabin-appear 2.5s ease forwards;
+}
+
+@keyframes cabin-appear {
+    0% {
+        opacity: 0;
+        transform: scale(1);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1.12);
+    }
+
+}
+
+/* 小屋场景：远景与中景光影 */
+.cabin-scene {
+    overflow: hidden;
+}
+
+/* 远景与海面：柔和的流动光影 */
+.cabin-scene::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            ellipse at 50% 68%,
+            rgba(120, 190, 220, 0.35),
+            transparent 38%
+        ),
+        linear-gradient(
+            110deg,
+            transparent 25%,
+            rgba(130, 210, 220, 0.29) 48%,
+            transparent 70%
+        );
+
+    background-size: 100% 100%, 220% 100%;
+    background-position: center, 0% center;
+
+    opacity: 0.95;
+
+    animation: atmosphere-flow 12s ease-in-out infinite alternate;
+}
+
+@keyframes atmosphere-flow {
+    from {
+        background-position: center, 0% center;
+        opacity: 0.35;
+    }
+
+    to {
+        background-position: center, 100% center;
+        opacity: 0.8;
+    }
+}
+
+/* 近景：底部暗部与四周暗角 */
+.cabin-scene::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+
+    pointer-events: none;
+
+    background:
+        linear-gradient(
+            to top,
+            rgba(2, 8, 18, 0.58) 0%,
+            rgba(2, 8, 18, 0.2) 25%,
+            transparent 48%
+        ),
+        radial-gradient(
+            ellipse at center,
+            transparent 42%,
+            rgba(3, 12, 25, 0.28) 100%
+        );
+}
+
+/* 2.5D 小屋分层视差 */
+.cabin-scene {
+    overflow: hidden;
+    isolation: isolate;
+}
+
+/* 所有图片图层 */
+.cabin-layer {
+    position: absolute;
+    inset: -1.5%;
+
+    background-image: url("./assets/backgrounds/cabin.jpg");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+
+    pointer-events: none;
+}
+
+/* 远景：极光天空 */
+.cabin-sky {
+    z-index: 3;
+
+    clip-path: polygon(
+        0 0,
+        100% 0,
+        100% 65%,
+        0 65%
+    );
+    transform: translate(0);
+}
+
+/* 中景：左侧海面 */
+.cabin-ocean {
+    z-index: 4;
+
+    clip-path: polygon(
+        -10 40%,
+        110% 40%,
+        110% 100%,
+        -10 100%
+    );
+    transform: translate(0);
+}
+
+/* 主体：右侧小屋 */
+.cabin-house {
+    z-index: 5;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%, black 100%);
+    mask-image: linear-gradient(to right, transparent 0%, black 15%, black 100%);
+    transform: translate(0);
+}
+
+/* 礁石海岸 */
+.cabin-foreground {
+    position: absolute;
+    inset: 0;
+    z-index: 6;
+
+    pointer-events: none;
+
+    background:
+        linear-gradient(
+            to top,
+            rgba(2, 7, 15, 0.5) 0%,
+            rgba(2, 7, 15, 0.16) 16%,
+            transparent 38%
+        );
+        transform: translate(0);
+}
+
+/* 视差动画 */
+.cabin-scene.show .cabin-sky {
+    animation: sky-depth 16s ease-in-out infinite alternate;
+}
+
+.cabin-scene.show .cabin-ocean {
+    animation: ocean-depth 12s ease-in-out infinite alternate;
+}
+
+.cabin-scene.show .cabin-house {
+    animation: house-depth 8s ease-in-out infinite alternate;
+}
+
+.cabin-scene.show .cabin-foreground {
+    animation: foreground-depth 6s ease-in-out infinite alternate;
+}
+perspective: 1200px;
+transform-style: preserve-3d;
+
+
+/* 天空 */
+@keyframes sky-depth {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.01);
+    }
+}
+
+/* 海面 */
+@keyframes ocean-depth {
+    from {
+        transform: scale(1.005);
+    }
+
+    to {
+        transform: scale(1.015);
+    }
+}
+
+/* 小屋 */
+@keyframes house-depth {
+    from {
+        transform: scale(1.005);
+    }
+
+    to {
+        transform: scale(1.15);
+    }
+}
+
+/* 近景 */
+@keyframes foreground-depth {
+    from {
+        opacity: 0.65;
+        transform: translateY(0);
+    }
+
+    to {
+        opacity: 0.9;
+        transform: translateY(-0.5%);
+    }
+}
+
+/* 鼠标视差过渡 */
+.cabin-layer,
+.cabin-foreground {
+    transition: translate 0.25s ease-out;
+    will-change: translate;
+}
+
+/* 鼠标离开时，平滑回到原位 */
+.cabin-scene:not(.show) .cabin-layer,
+.cabin-scene:not(.show) .cabin-foreground {
+    translate: 0 0;
+}
+
+/* 小屋场景中的「前进」按钮 */
+.cabin-advance {
+    position: absolute;
+    left: 65%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 30;
+    padding: 16px 55px;
+
+    background: rgba(196, 137, 75, 0.28);
+    border: 1px solid rgba(255, 222, 175, 0.55);
+    border-radius: 8px;
+    color: rgba(255, 235, 205, 0.95);
+    font-size: 22px;
+    letter-spacing: 5px;
+
+    cursor: pointer;
+    pointer-events: auto;
+    backdrop-filter: blur(5px);
+
+    transition:
+        background 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+        
+}
+
+/* 鼠标悬停时的微弱暖光 */
+.cabin-advance:hover {
+    background: rgba(196, 137, 75, 0.42);
+    border-color: rgba(255, 222, 175, 0.8);
+    box-shadow: 0 0 22px rgba(255, 185, 105, 0.18);
+}
+
+/* 前进按钮渐显 */
+    opacity: 0;
+    animation: advance-appear 3s ease 5s forwards;
+.cabin-scene.show .cabin-advance {
+    animation: advance-appear 1s ease 2s forwards;
+}
+
+@keyframes advance-appear {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
